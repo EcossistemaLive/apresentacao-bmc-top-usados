@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Model Canvas — Top Usados | Live Consultoria</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #06192a;
+            --card-bg: #0A243D;
+            --accent-color: #00e800;
+            --accent-glow: rgba(0, 232, 0, 0.15);
+            --text-primary: #ffffff;
+            --text-muted: #cccccc;
+            --text-dim: #8899aa;
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Merriweather', serif;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --warning: #ffa502;
+            --danger: #ff4757;
+            --info: #3498db;
+            --success: #00e800;
+            --space-sm: 1.5rem;
+            --space-md: 2rem;
+
+            /* BMC Colors */
+            --bmc-partners: #e74c3c;
+            --bmc-activities: #3498db;
+            --bmc-resources: #2ecc71;
+            --bmc-value: #f39c12;
+            --bmc-relationships: #9b59b6;
+            --bmc-channels: #e67e22;
+            --bmc-segments: #1abc9c;
+            --bmc-costs: #34495e;
+            --bmc-revenue: #16a085;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            background-attachment: fixed;
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(6, 25, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header img {
+            height: 35px;
+            opacity: 0.9;
+        }
+
+        .header-info {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .header-info span {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 120px 0 40px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 232, 0, 0.04) 0%, transparent 100%);
+        }
+
+        .hero h1 {
+            font-family: var(--font-secondary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        /* BMC GRID */
+        .bmc-wrapper {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 4rem;
+            overflow-x: auto;
+        }
+
+        .bmc-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: repeat(3, minmax(200px, auto));
+            gap: 10px;
+            min-width: 1000px;
+        }
+
+        .bmc-cell {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bmc-cell:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Cell Positioning */
+        .bp-partners {
+            grid-column: 1 / 3;
+            grid-row: 1 / 3;
+            border-top: 3px solid var(--bmc-partners);
+        }
+
+        .bp-activities {
+            grid-column: 3 / 5;
+            grid-row: 1 / 2;
+            border-top: 3px solid var(--bmc-activities);
+        }
+
+        .bp-resources {
+            grid-column: 3 / 5;
+            grid-row: 2 / 3;
+            border-top: 3px solid var(--bmc-resources);
+        }
+
+        .bp-value {
+            grid-column: 5 / 7;
+            grid-row: 1 / 3;
+            border-top: 3px solid var(--bmc-value);
+        }
+
+        .bp-relationships {
+            grid-column: 7 / 9;
+            grid-row: 1 / 2;
+            border-top: 3px solid var(--bmc-relationships);
+        }
+
+        .bp-channels {
+            grid-column: 7 / 9;
+            grid-row: 2 / 3;
+            border-top: 3px solid var(--bmc-channels);
+        }
+
+        .bp-segments {
+            grid-column: 9 / 11;
+            grid-row: 1 / 3;
+            border-top: 3px solid var(--bmc-segments);
+        }
+
+        .bp-costs {
+            grid-column: 1 / 6;
+            grid-row: 3 / 4;
+            border-top: 3px solid var(--bmc-costs);
+        }
+
+        .bp-revenue {
+            grid-column: 6 / 11;
+            grid-row: 3 / 4;
+            border-top: 3px solid var(--bmc-revenue);
+        }
+
+        .bmc-cell-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .bmc-cell-header i {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .bp-partners .bmc-cell-header {
+            color: var(--bmc-partners);
+        }
+
+        .bp-activities .bmc-cell-header {
+            color: var(--bmc-activities);
+        }
+
+        .bp-resources .bmc-cell-header {
+            color: var(--bmc-resources);
+        }
+
+        .bp-value .bmc-cell-header {
+            color: var(--bmc-value);
+        }
+
+        .bp-relationships .bmc-cell-header {
+            color: var(--bmc-relationships);
+        }
+
+        .bp-channels .bmc-cell-header {
+            color: var(--bmc-channels);
+        }
+
+        .bp-segments .bmc-cell-header {
+            color: var(--bmc-segments);
+        }
+
+        .bp-costs .bmc-cell-header {
+            color: var(--bmc-costs);
+        }
+
+        .bp-revenue .bmc-cell-header {
+            color: var(--bmc-revenue);
+        }
+
+        .bmc-content {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .bmc-content h4 {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin: 0.5rem 0 0.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2px;
+        }
+
+        .bmc-content ul {
+            list-style: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .bmc-content ul li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .bmc-content ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* STRATEGIC INSIGHTS */
+        .insights-section {
+            margin-top: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .insight-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .insight-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .insight-box {
+            background: rgba(0, 232, 0, 0.06);
+            border: 1px solid rgba(0, 232, 0, 0.15);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <img src="https://raw.githubusercontent.com/Clebito2/ConsultoriaLive/main/Logo%20live%20oficial-21.png"
+                alt="Live Consultoria">
+            <div class="header-info">
+                <div><span>Top Usados (Eduardo)</span></div>
+                <div>Business Model Canvas & Estratégia</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero fade-in">
+        <div class="container">
+            <h1>Business Model Canvas 🚗</h1>
+            <p class="subtitle">Mapeamento estratégico exclusivo para o portal <strong>Top Usados</strong>. Baseado nas
+                deliberações de onboarding e metodologias modernas de inovação iterativa.</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- CANVAS SECTION -->
+        <div class="bmc-wrapper fade-in">
+            <div class="bmc-grid">
+
+                <!-- 8. Key Partnerships -->
+                <div class="bmc-cell bp-partners">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-handshake"></i> Parcerias Chave</div>
+                    <div class="bmc-content">
+                        <h4>Estratégicas</h4>
+                        <ul>
+                            <li>Live Consultoria (Metodologia e IA)</li>
+                            <li>Prof. Alexandre (Infra/Cibersegurança)</li>
+                            <li>Parceiros regionais (RJ, SP, PE)</li>
+                        </ul>
+                        <h4>"Dukungan Eksternal" (Alavancas)</h4>
+                        <ul>
+                            <li>Despachantes (Confiança pós-venda)</li>
+                            <li>Associações de Proteção Veicular (Aprovec)</li>
+                            <li>Influenciadores automotivos (Embaixadores e canais oficiais)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 7. Key Activities -->
+                <div class="bmc-cell bp-activities">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-list-check"></i> Atividades Chave</div>
+                    <div class="bmc-content">
+                        <ul>
+                            <li>Onboarding agressivo (Subsídio e captação de lojistas/PFs)</li>
+                            <li>Desenvolvimento e treinamento da IA conversacional</li>
+                            <li>Marketing e distribuição multicanal (tráfego e SEO)</li>
+                            <li>Moderação de anúncios e antifraude contínua</li>
+                            <li>Governança e estruturação legal para Valuation (ERP)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 6. Key Resources -->
+                <div class="bmc-cell bp-resources">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-cubes"></i> Recursos Principais</div>
+                    <div class="bmc-content">
+                        <ul>
+                            <li>Plataforma Tecnológica e Banco de Dados (Integração FIPE)</li>
+                            <li>Gestor Operacional Central (Contrato Partner Track)</li>
+                            <li>Tráfego (Google, Meta, LinkedIn)</li>
+                            <li>Tecnologia AIOS embutida no projeto</li>
+                            <li>Auditoria Histórica Impecável (ERP validado)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 2. Value Propositions -->
+                <div class="bmc-cell bp-value">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-gem"></i> Proposta de Valor</div>
+                    <div class="bmc-content">
+                        <h4>Para B2C (Pessoa Física)</h4>
+                        <ul>
+                            <li>Uso 100% Gratuito na fase de tração</li>
+                            <li>IA Conversacional Embarcada (A busca trabalhando para você)</li>
+                            <li>Opção de locação direta Pessoa-para-Pessoa (sem intermédios burocráticos)</li>
+                            <li>Segmentos inexplorados: "Clássicos" em destaque</li>
+                        </ul>
+                        <h4>Para B2B (Lojas e Locadoras)</h4>
+                        <ul>
+                            <li>Dashboard Completo de performance (tempo tela, cliques)</li>
+                            <li>Personalização de Vitrines ("Loja oficial" interna)</li>
+                            <li>Inovação Tecnológica com menos concorrência brutal do que a WebMotors</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4. Customer Relationships -->
+                <div class="bmc-cell bp-relationships">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-heart"></i> Relacionamento</div>
+                    <div class="bmc-content">
+                        <h4>Automated & Self-Service</h4>
+                        <ul>
+                            <li>Auxílio guiado por inteligência artificial aos consumidores (PF)</li>
+                            <li>Onboarding sem atrito</li>
+                        </ul>
+                        <h4>Personalized Relationship</h4>
+                        <ul>
+                            <li>Suporte premium "Hand-holding" para revendas e lojas credenciadas e oficiais</li>
+                            <li>Atendimento diferenciado para frotistas</li>
+                        </ul>
+                        <h4>Credibilidade Externa</h4>
+                        <ul>
+                            <li>Presença ativa e responsiva no Reclame Aqui</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 3. Channels -->
+                <div class="bmc-cell bp-channels">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-paper-plane"></i> Canais</div>
+                    <div class="bmc-content">
+                        <ul>
+                            <li><strong>Estratégia Multiplexada ("Globo/SporTV"):</strong> Perfis de Instagram dedicados
+                                para nichos distintos.</li>
+                            <li><strong>LinkedIn:</strong> O canal prioritário de conversão para veículos Premium
+                                (Ticket +R$200k).</li>
+                            <li><strong>Google Ads e SEO:</strong> A máquina passiva e perene de tráfego.</li>
+                            <li><strong>Influenciadores:</strong> Marketing de influência segmentado por tipo de veículo
+                                (clássicos, pesados, utilitários).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 1. Customer Segments -->
+                <div class="bmc-cell bp-segments">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-users"></i> Segmentos de Clientes</div>
+                    <div class="bmc-content">
+                        <h4>Compradores e Vendedores (B2C)</h4>
+                        <ul>
+                            <li>Pessoas Físicas (Tickets até R$ 60k)</li>
+                            <li>Pessoas Físicas (Tickets acima de R$ 60k - Premium)</li>
+                            <li>Buscadores de aluguel por assinatura direta.</li>
+                            <li>Nicho Aficionado: Colecionadores de clássicos</li>
+                        </ul>
+                        <h4>Especialistas e Varejo (B2B)</h4>
+                        <ul>
+                            <li>Revendedores independentes (Garagens de veículos)</li>
+                            <li>Lojas oficiais credenciadas</li>
+                            <li>Locadoras Oficiais (Frotistas)</li>
+                            <li>Motoristas de Aplicativos (Ciclo de troca ou aluguel)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 9. Cost Structure -->
+                <div class="bmc-cell bp-costs">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-calculator"></i> Estrutura de Custos</div>
+                    <div class="bmc-content">
+                        <ul>
+                            <li><strong>Operação Humana:</strong> Remuneração Gestor Operacional (~R$ 5.000 Fixo +
+                                Variável Partner Track) e Desenvolvedores.</li>
+                            <li><strong>CAC e Mídia:</strong> Alto e contínuo volume em compra de tráfego (Google Ads,
+                                Meta, LinkedIn).</li>
+                            <li><strong>Tecnologia e Serviços:</strong> Costeio da infraestrutura em nuvem, assinatura
+                                do sistema ERP para auditoria e Consultoria Live (R$ 12.000).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 5. Revenue Streams -->
+                <div class="bmc-cell bp-revenue">
+                    <div class="bmc-cell-header"><i class="fa-solid fa-money-bill-wave"></i> Fontes de Receita</div>
+                    <div class="bmc-content">
+                        <ul>
+                            <li><strong>Curto prazo:</strong> Monetização passiva por acesso via Google AdSense.</li>
+                            <li><strong>Médio prazo (Pós-escala):</strong> Venda de destaques (Planos
+                                Bronze/Prata/Destaque). *O diferencial principal pro cliente é ser vitalício até o carro
+                                ser vendido*.</li>
+                            <li><strong>Patrocínios:</strong> Cotas para seguradoras, consórcios e marcas agregadas no
+                                portal.</li>
+                            <li><strong>O "Endgame" (24 Meses):</strong> Acúmulo de valuation (Equity) visando Exit
+                                (Venda da operação) ou Série A.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STRATEGY INSIGHTS -->
+        <div class="insights-section fade-in">
+            <h2>Metodologia Adotada e Próximos Passos</h2>
+            <br>
+            <div class="insight-card">
+                <h3><i class="fa-solid fa-recycle"></i> Iteração e "Lean Startup"</h3>
+                <p class="delib-summary">O BMC não deve ser tratado como um artefato rígido ("escrito em pedra").
+                    Especialmente para a estratégia inicial do Top Usados — os anos de <strong>subsídio e
+                        gratuidade</strong> para angariar os 3 milhões de acessos mensais.</p>
+                <div class="insight-box">
+                    <strong>💡 Recomendações Táticas:</strong>
+                    <p>O Gerente de Projetos deve definir marcos temporais preestabelecidos (trimestrais) para verificar
+                        a captação real de lojas. Se a métrica base não responder ao esperado sob "custo zero", os
+                        blocos de 'Canais' e 'Propostas de Valor' passarão por repivotagem emergencial imediata antes de
+                        considerar a volta da cobrança ("Revenue Streams").</p>
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <h3><i class="fa-solid fa-bolt"></i> A Alavancagem por Parcerias ("Dukungan Eksternal")</h3>
+                <p class="delib-summary">Quando uma plataforma adentra com poderio nulo frente a marcas já estabelecidas
+                    como Santander/Webmotors, a validação da segurança (para reduzir fricção/fraude percebidas pela
+                    pessoa física) reside na autoridade de terceiros.</p>
+                <div class="insight-box">
+                    <strong>💡 Recomendações Táticas:</strong>
+                    <p>As parcerias estratégicas vão muito além de programadores. O uso tático de "despachantes de
+                        confiança" no checkout virtual e serviços de "estética" transmitem um ecossistema seguro de
+                        curadoria do veículo. A inserção explícita de influenciadores garantirá o lastro na comunidade.
+                    </p>
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <h3><i class="fa-solid fa-robot"></i> Diferenciação Inovadora</h3>
+                <p class="delib-summary">Empresas que priorizam inovações sustentáveis retêm a lealdade por muito mais
+                    tempo. Proposições rasas como "interface bonita", ou "anúncios da sua região", hoje são
+                    comoditizadas.</p>
+                <div class="insight-box">
+                    <strong>💡 Recomendações Táticas:</strong>
+                    <p>Embasar toda a narrativa de marketing nas três verdadeiras inovações do projeto: (1) O painel e
+                        dashboard vitrine do lojista B2B. (2) Busca inteligente/conversacional guiada por IA para
+                        usuários leigos. (3) Facilitação bruta para modalidades de "aluguel" onde antes só cabia
+                        "compra/venda".</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Gerado automaticamente • Protocolo AIOS Live Consultoria</p>
+        <p class="dev-credit">BMC Structure v2.0</p>
+    </footer>
+
+    <script>
+        // Simple intersection observer for fade-in animations
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+        });
+    </script>
+</body>
+
+</html>
